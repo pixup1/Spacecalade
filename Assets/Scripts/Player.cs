@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,12 +9,12 @@ public class Player : MonoBehaviour
     private InputAction leapAction;
     private InputAction noRcsAction;
     private float leapForce = 500f;
-    private readonly float aimThreshold = 0.1f;
-    //private Vector2[] lastAims;
-    //private readonly int aimSmoothingCount = 20;
+    private readonly float aimThreshold = 2.5f;
+    private Vector2 aimValue;
     private Vector2 aim;
     private Vector2 aimVelocity;
     private readonly float maxAngularAcceleration = 50; // rad/s²
+    public bool grab = false;
 
     void Start()
     {
@@ -23,27 +22,30 @@ public class Player : MonoBehaviour
         aimAction = InputSystem.actions.FindAction("Aim");
         leapAction = InputSystem.actions.FindAction("Leap");
         noRcsAction = InputSystem.actions.FindAction("NoRCS");
-        //lastAims = new Vector2[aimSmoothingCount];
     }
 
     void Update()
     {
-        Vector2 aimValue = aimAction.ReadValue<Vector2>();
+        aimValue = aimAction.ReadValue<Vector2>();
 
+        if (leapAction.WasPressedThisFrame() && grab)
+        {
+            UnGrab();
+            rb.AddRelativeForceX(leapForce);
+        }
+    }
+
+    void FixedUpdate()
+    {
         if (Mathf.Sqrt(Mathf.Pow(aimValue.x, 2f) + Mathf.Pow(aimValue.y, 2f)) > aimThreshold)
         {
-            // for (int i = 0; i < aimSmoothingCount - 1; i++)
-            // {
-            //     lastAims[i] = lastAims[i + 1];
-            // }
-            // lastAims[4] = aimValue;
             aim = Vector2.SmoothDamp(aim, aimValue, ref aimVelocity, 0.025f);
         }
 
         if (!noRcsAction.IsPressed())
         {
-            float aimX = aim.x;//lastAims.Aggregate(0f, (acc, a) => acc + a.x);
-            float aimY = aim.y;//lastAims.Aggregate(0f, (acc, a) => acc + a.y);
+            float aimX = aim.x;
+            float aimY = aim.y;
 
             // Both angles go from 0 (pointing right) to 2*pi (counterclockwise ofc)
             float angleGoal = (Mathf.Atan2(aimY, aimX) + 2 * Mathf.PI) % (2 * Mathf.PI);
@@ -78,12 +80,21 @@ public class Player : MonoBehaviour
 
                 rb.AddTorque(Mathf.Clamp(acc, -maxAngularAcceleration, maxAngularAcceleration));
             }
-            //transform.rotation = Quaternion.AngleAxis(angleGoal * Mathf.Rad2Deg, Vector3.forward);
         }
+    }
 
-        if (leapAction.WasPressedThisFrame())
-        {
-            rb.AddRelativeForceX(leapForce);
-        }
+    public void Grab(Vector2 position)
+    {
+        grab = true;
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        transform.position = position;
+        gameObject.layer = LayerMask.NameToLayer("NoCollision");
+    }
+
+    void UnGrab()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        rb.constraints = 0;
+        grab = false;
     }
 }
