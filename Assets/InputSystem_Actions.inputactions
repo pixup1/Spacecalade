@@ -27,7 +27,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "NoRCS",
+                    "name": "GoLimp",
                     "type": "Button",
                     "id": "68361d4e-d625-4895-90ae-6b1f9e22d184",
                     "expectedControlType": "",
@@ -111,7 +111,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NoRCS",
+                    "action": "GoLimp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

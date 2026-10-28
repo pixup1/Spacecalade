@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private InputAction aimAction;
     private InputAction leapAction;
-    private InputAction noRcsAction;
+    private InputAction limpAction;
     private float leapForce = 500f;
     private readonly float aimThreshold = 2.5f;
     private Vector2 aimValue;
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         aimAction = InputSystem.actions.FindAction("Aim");
         leapAction = InputSystem.actions.FindAction("Leap");
-        noRcsAction = InputSystem.actions.FindAction("NoRCS");
+        limpAction = InputSystem.actions.FindAction("GoLimp");
     }
 
     void Update()
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
             aim = Vector2.SmoothDamp(aim, aimValue, ref aimVelocity, 0.025f);
         }
 
-        if (!noRcsAction.IsPressed())
+        if (!limpAction.IsPressed())
         {
             float aimX = aim.x;
             float aimY = aim.y;

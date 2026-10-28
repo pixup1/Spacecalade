@@ -1,10 +1,17 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerArms : MonoBehaviour
 {
     public Player player;
+    private InputAction limpAction;
     private float rotationVelocity;
     private float lockedAngle;
+
+    void Start()
+    {
+        limpAction = InputSystem.actions.FindAction("GoLimp");
+    }
 
     void Update()
     {
@@ -25,7 +32,7 @@ public class PlayerArms : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Wall"))
+        if (/*!limpAction.IsPressed() &&*/ collider.GetComponent<Grabbable>() != null)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 1.0f);
             if (hit && hit.collider == collider)
