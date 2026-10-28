@@ -28,9 +28,18 @@ I want this game to be pretty challenging, but getting it to be challenging (wit
 
 Intro cinematic
 
-Teaches leaping, grabbing, dying in the void, and bouncing.
+Teaches leaping, grabbing, dying in the void, dying to a deadly wall, and bouncing.
 
-**Specific mechanics:** Walls that you can only bounce off (can't grab them)
+**Specific mechanics:**
+- Walls that you can only bounce off (can't grab them)
+- Walls that kill you
+
+**Parts of the level:**
++ Simple leaping tutorial, from one wall to another
++ Introduction of the void
++ Introduction of slippy walls with a trap
++ Use of a slippy wall to get around a threat
++ To end the level, camera pulls back, big leap to another part of the station
 
 ### Level 2
 

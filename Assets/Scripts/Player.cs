@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     private Vector2 aimVelocity;
     private readonly float maxAngularAcceleration = 50; // rad/s²
     public bool grab = false;
+    private Vector2 startPosition;
+    private Quaternion startRotation;
 
     void Start()
     {
@@ -22,6 +24,10 @@ public class Player : MonoBehaviour
         aimAction = InputSystem.actions.FindAction("Aim");
         leapAction = InputSystem.actions.FindAction("Leap");
         limpAction = InputSystem.actions.FindAction("GoLimp");
+
+        grab = true;
+        startPosition = transform.position;
+        startRotation = transform.rotation;
     }
 
     void Update()
@@ -96,5 +102,13 @@ public class Player : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         rb.constraints = 0;
         grab = false;
+    }
+
+    public void Kill()
+    {
+        grab = true;
+        transform.SetPositionAndRotation(startPosition, startRotation);
+        rb.linearVelocity = new(0,0);
+        rb.angularVelocity = 0;
     }
 }
