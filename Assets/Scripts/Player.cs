@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+    private Camera camera;
     private Rigidbody2D rb;
     private InputAction aimAction;
     private InputAction leapAction;
@@ -14,18 +15,22 @@ public class Player : MonoBehaviour
     private Vector2 aim;
     private Vector2 aimVelocity;
     private readonly float maxAngularAcceleration = 50; // rad/s²
-    public bool grab = false;
+    public bool grab;
+    public bool canGrab;
     private Vector2 startPosition;
     private Quaternion startRotation;
+    
 
     void Start()
     {
+        camera = FindAnyObjectByType<Camera>();
         rb = GetComponent<Rigidbody2D>();
         aimAction = InputSystem.actions.FindAction("Aim");
         leapAction = InputSystem.actions.FindAction("Leap");
         limpAction = InputSystem.actions.FindAction("GoLimp");
 
         grab = true;
+        canGrab = true;
         startPosition = transform.position;
         startRotation = transform.rotation;
     }
@@ -54,7 +59,7 @@ public class Player : MonoBehaviour
             float aimY = aim.y;
 
             // Both angles go from 0 (pointing right) to 2*pi (counterclockwise ofc)
-            float angleGoal = (Mathf.Atan2(aimY, aimX) + 2 * Mathf.PI) % (2 * Mathf.PI);
+            float angleGoal = (Mathf.Atan2(aimY, aimX) + camera.transform.eulerAngles.z * Mathf.Deg2Rad + 2 * Mathf.PI) % (2 * Mathf.PI);
             float angleCurrent = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
 
             float error = angleGoal - angleCurrent;
@@ -106,6 +111,7 @@ public class Player : MonoBehaviour
 
     public void Kill()
     {
+        canGrab = true;
         grab = true;
         transform.SetPositionAndRotation(startPosition, startRotation);
         rb.linearVelocity = new(0,0);

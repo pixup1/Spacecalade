@@ -20,8 +20,10 @@ public class Void : MonoBehaviour
 
     IEnumerator KillPlayerController(Player player)
     {
+        player.canGrab = false;
         camera.following = false;
         yield return new WaitForSeconds(1.5f);
+        //TODO: make player not disappear while camera is still panning
         player.Kill();
         camera.following = true;
     }
