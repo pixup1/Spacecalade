@@ -45,4 +45,4 @@ Teaches leaping, grabbing, dying in the void, dying to a deadly wall, and bounci
 
 ### Level ideas
 
-A level where the station is only on one side of the screen, and you can easily get bounced into outer space (like Gravity (2013))
+A level where the station is only on one side of the screen, and you can easily get bounced into outer space (like Gravity (2013)) (wait how is that even possible actually)

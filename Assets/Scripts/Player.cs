@@ -1,3 +1,6 @@
+#nullable enable
+
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +8,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private Camera camera;
+    private StartPosition? start;
     private Rigidbody2D rb;
     private InputAction aimAction;
     private InputAction leapAction;
@@ -17,22 +21,22 @@ public class Player : MonoBehaviour
     private readonly float maxAngularAcceleration = 50; // rad/s²
     public bool grab;
     public bool canGrab;
-    private Vector2 startPosition;
-    private Quaternion startRotation;
-    
+    private Vector2 startPos;
+    private Quaternion startRot;
+
 
     void Start()
     {
         camera = FindAnyObjectByType<Camera>();
+        start = FindAnyObjectByType<StartPosition>();
         rb = GetComponent<Rigidbody2D>();
         aimAction = InputSystem.actions.FindAction("Aim");
         leapAction = InputSystem.actions.FindAction("Leap");
         limpAction = InputSystem.actions.FindAction("GoLimp");
+        startPos = transform.position;
+        startRot = transform.rotation;
 
-        grab = true;
-        canGrab = true;
-        startPosition = transform.position;
-        startRotation = transform.rotation;
+        Reset();
     }
 
     void Update()
@@ -109,12 +113,28 @@ public class Player : MonoBehaviour
         grab = false;
     }
 
-    public void Kill()
+    public void Reset()
     {
         canGrab = true;
-        grab = true;
-        transform.SetPositionAndRotation(startPosition, startRotation);
-        rb.linearVelocity = new(0,0);
-        rb.angularVelocity = 0;
+        if (start != null)
+        {
+            grab = start.grab;
+            transform.SetPositionAndRotation(start.transform.position, start.transform.rotation);
+            if (!grab)
+            {
+                rb.linearVelocity = start.linearVelocity;
+            }
+            else
+            {
+                rb.linearVelocity = new(0, 0);
+            }
+            rb.angularVelocity = start.angularVelocity;
+        } else
+        {
+            grab = true;
+            transform.SetPositionAndRotation(startPos, startRot);
+            rb.linearVelocity = new(0,0);
+            rb.angularVelocity = 0;
+        }
     }
 }

@@ -32,9 +32,7 @@ public class Camera : MonoBehaviour
         KeyValuePair<float, CameraRotationControlPoint> point1 = pointOrientations.Skip(1).First();
         float factor = Vector2.Dot(transform.position - point0.Value.transform.position, point1.Value.transform.position - point0.Value.transform.position) / Mathf.Pow(Vector2.Distance(point0.Value.transform.position, point1.Value.transform.position), 2);
         factor = Mathf.Clamp(factor, 0, 1);
-        print(factor);
         float angleGoal = (1 - factor) * point0.Value.transform.eulerAngles.z + factor * point1.Value.transform.eulerAngles.z;
-        print(angleGoal);
         transform.rotation = Quaternion.AngleAxis(Mathf.SmoothDampAngle(transform.eulerAngles.z, angleGoal, ref angleVelocity, 1f), Vector3.forward);
     }
 }

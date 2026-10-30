@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Void : MonoBehaviour
 {
     private Camera camera;
@@ -8,6 +9,8 @@ public class Void : MonoBehaviour
     void Start()
     {
         camera = FindAnyObjectByType<Camera>();
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.enabled = false;
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -24,7 +27,7 @@ public class Void : MonoBehaviour
         camera.following = false;
         yield return new WaitForSeconds(1.5f);
         //TODO: make player not disappear while camera is still panning
-        player.Kill();
+        player.Reset();
         camera.following = true;
     }
 }

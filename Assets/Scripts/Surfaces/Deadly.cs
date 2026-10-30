@@ -6,7 +6,7 @@ public class Deadly : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Player>(out var player))
         {
-            player.Kill();
+            player.Reset();
         }
     }
 }
