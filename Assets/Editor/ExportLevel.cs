@@ -14,9 +14,21 @@ public class ExportLevel
         string path = Application.dataPath + "/ExportedLevels/Level1.obj";
 
         List<Collider2D> grabbables = new();
-        foreach (Grabbable grabbable in Object.FindObjectsByType<Grabbable>())
+        foreach (Grabbable col in Object.FindObjectsByType<Grabbable>())
         {
-            grabbables.Add(grabbable.gameObject.GetComponentInParent<Collider2D>());
+            grabbables.Add(col.gameObject.GetComponentInParent<Collider2D>());
+        }
+
+        List<Collider2D> slippys = new();
+        foreach (Slippy col in Object.FindObjectsByType<Slippy>())
+        {
+            slippys.Add(col.gameObject.GetComponentInParent<Collider2D>());
+        }
+
+        List<Collider2D> deadlys = new();
+        foreach (Deadly col in Object.FindObjectsByType<Deadly>())
+        {
+            deadlys.Add(col.gameObject.GetComponentInParent<Collider2D>());
         }
 
         StringBuilder obj = new();
@@ -24,74 +36,13 @@ public class ExportLevel
         int vertexOffset = 0;
 
         obj.AppendLine("o grabbable");
-        foreach (Collider2D col in grabbables)
-        {
-            Mesh mesh = CreateMesh(col);
+        WriteColliders(grabbables, obj, ref vertexOffset);
 
-            Vector3[] vertices = mesh.vertices;
-            int[] triangles = mesh.triangles;
-            if (vertices.Length == 0) continue;
+        obj.AppendLine("o slippy");
+        WriteColliders(slippys, obj, ref vertexOffset);
 
-            foreach (Vector3 vertex in vertices)
-            {
-                Vector3 world;
-
-                if (col is PolygonCollider2D)
-                {
-                    world = vertex + col.transform.position;
-                }
-                else
-                {
-                    world = col.transform.TransformPoint(vertex);
-                }
-
-                obj.AppendLine(
-                    "v " +
-                    FormatValue(world.x) + " " +
-                    FormatValue(world.y) + " " +
-                    FormatValue(world.z)
-                );
-            }
-
-            for (int i = 0; i < triangles.Length; i += 3)
-            {
-                int a = triangles[i];
-                int b = triangles[i + 1];
-                int c = triangles[i + 2];
-
-                Vector3 va = col.transform.TransformPoint(
-                    vertices[a]
-                );
-
-                Vector3 vb = col.transform.TransformPoint(
-                    vertices[b]
-                );
-
-                Vector3 vc = col.transform.TransformPoint(
-                    vertices[c]
-                );
-
-                float crossZ =
-                    (vb.x - va.x) * (vc.y - va.y) -
-                    (vb.y - va.y) * (vc.x - va.x);
-
-                if (crossZ < 0)
-                {
-                    (c, b) = (b, c);
-                }
-
-                int ia = vertexOffset + a + 1;
-                int ib = vertexOffset + b + 1;
-                int ic = vertexOffset + c + 1;
-
-                obj.AppendLine(
-                    $"f {ia} {ib} {ic}"
-                );
-            }
-
-            vertexOffset += vertices.Length;
-            Object.DestroyImmediate(mesh);
-        }
+        obj.AppendLine("o deadly");
+        WriteColliders(deadlys, obj, ref vertexOffset);
 
         File.WriteAllText(path, obj.ToString());
 
@@ -192,5 +143,77 @@ public class ExportLevel
             "R",
             CultureInfo.InvariantCulture
         );
+    }
+
+    private static void WriteColliders(List<Collider2D> colliders, StringBuilder obj, ref int vertexOffset)
+    {
+        foreach (Collider2D col in colliders)
+        {
+            Mesh mesh = CreateMesh(col);
+
+            Vector3[] vertices = mesh.vertices;
+            int[] triangles = mesh.triangles;
+            if (vertices.Length == 0) continue;
+
+            foreach (Vector3 vertex in vertices)
+            {
+                Vector3 world;
+
+                if (col is PolygonCollider2D)
+                {
+                    world = vertex + col.transform.position;
+                }
+                else
+                {
+                    world = col.transform.TransformPoint(vertex);
+                }
+
+                obj.AppendLine(
+                    "v " +
+                    FormatValue(world.x) + " " +
+                    FormatValue(world.y) + " " +
+                    FormatValue(world.z)
+                );
+            }
+
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
+                int a = triangles[i];
+                int b = triangles[i + 1];
+                int c = triangles[i + 2];
+
+                Vector3 va = col.transform.TransformPoint(
+                    vertices[a]
+                );
+
+                Vector3 vb = col.transform.TransformPoint(
+                    vertices[b]
+                );
+
+                Vector3 vc = col.transform.TransformPoint(
+                    vertices[c]
+                );
+
+                float crossZ =
+                    (vb.x - va.x) * (vc.y - va.y) -
+                    (vb.y - va.y) * (vc.x - va.x);
+
+                if (crossZ < 0)
+                {
+                    (c, b) = (b, c);
+                }
+
+                int ia = vertexOffset + a + 1;
+                int ib = vertexOffset + b + 1;
+                int ic = vertexOffset + c + 1;
+
+                obj.AppendLine(
+                    $"f {ia} {ib} {ic}"
+                );
+            }
+
+            vertexOffset += vertices.Length;
+            Object.DestroyImmediate(mesh);
+        }
     }
 }

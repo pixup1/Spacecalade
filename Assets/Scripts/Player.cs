@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+    public PlayerArms arms;
     private Camera camera;
     private StartPosition? start;
     private Rigidbody2D rb;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        arms = FindAnyObjectByType<PlayerArms>();
         camera = FindAnyObjectByType<Camera>();
         start = FindAnyObjectByType<StartPosition>();
         rb = GetComponent<Rigidbody2D>();
@@ -120,6 +122,8 @@ public class Player : MonoBehaviour
         {
             grab = start.grab;
             transform.SetPositionAndRotation(start.transform.position, start.transform.rotation);
+            arms.SetLockedAngle(startRot.eulerAngles.z);
+            arms.transform.rotation = startRot;
             if (!grab)
             {
                 rb.linearVelocity = start.linearVelocity;

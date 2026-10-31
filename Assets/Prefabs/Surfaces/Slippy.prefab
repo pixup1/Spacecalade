@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8032781918123472113}
   - component: {fileID: 1746790256758303097}
   - component: {fileID: 8147507519011039620}
+  - component: {fileID: 2197321782911281679}
   m_Layer: 0
   m_Name: Slippy
   m_TagString: Untagged
@@ -167,3 +168,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2197321782911281679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8177242976754693547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c666d613eb2f54ea0ff5087c04f4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Slippy

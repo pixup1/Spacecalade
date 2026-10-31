@@ -9,8 +9,10 @@ public class Camera : MonoBehaviour
     private UnityEngine.Camera camera;
     private Vector3 velocity;
     private Vector3 lastFollowedPosition;
+    private Vector3? snapTarget;
     private float angleVelocity;
     private float fovVelocity;
+    private Vector3 currentShift;
     public bool following;
     public Material skyboxMaterial;
 
@@ -22,9 +24,14 @@ public class Camera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (following)
-        {
-            lastFollowedPosition = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        if (following) {
+            if (snapTarget == null)
+            {
+                lastFollowedPosition = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z) + currentShift;
+            } else if (snapTarget != null)
+            {
+                lastFollowedPosition = snapTarget ?? lastFollowedPosition;
+            }
         }
         transform.position = Vector3.SmoothDamp(transform.position, lastFollowedPosition, ref velocity, 0.25f);
 
@@ -44,5 +51,18 @@ public class Camera : MonoBehaviour
         
         float fovGoal = (1 - factor) * point0.Value.fov + factor * point1.Value.fov;
         camera.fieldOfView = Mathf.SmoothDamp(camera.fieldOfView, fovGoal, ref fovVelocity, 1f);
+
+        currentShift = (1 - factor) * point0.Value.shift + factor * point1.Value.shift;
+
+        if (factor <= 0.5 && point0.Value.snap)
+        {
+            snapTarget = new Vector3(point0.Value.transform.position.x, point0.Value.transform.position.y, transform.position.z);
+        } else if (factor > 0.5 && point1.Value.snap)
+        {
+            snapTarget = new Vector3(point1.Value.transform.position.x, point1.Value.transform.position.y, transform.position.z);
+        } else
+        {
+            snapTarget = null;
+        }
     }
 }

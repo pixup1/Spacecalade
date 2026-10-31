@@ -42,9 +42,14 @@ public class PlayerArms : MonoBehaviour
         }
     }
 
-    void GrabSurface(Vector2 position, Vector2 normal)
+    public void GrabSurface(Vector2 position, Vector2 normal)
     {
         player.Grab(position + normal*0.5f);
         lockedAngle = Mathf.Atan2(-normal.y, -normal.x) * Mathf.Rad2Deg;
+    }
+
+    public void SetLockedAngle(float angle)
+    {
+        lockedAngle = angle;
     }
 }
