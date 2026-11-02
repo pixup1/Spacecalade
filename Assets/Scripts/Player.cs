@@ -1,8 +1,9 @@
 #nullable enable
 
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Mathematics;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour
     private InputAction leapAction;
     private InputAction limpAction;
     private float leapForce = 500f;
-    private readonly float aimThreshold = 2.5f;
+    private readonly float sensitivity = 0.06f;
     private Vector2 aimValue;
     private Vector2 aim;
     private Vector2 aimVelocity;
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour
     public bool canGrab;
     private Vector2 startPos;
     private Quaternion startRot;
+    private AudioSource audio;
+    public AudioResource jumpAudio;
+    public AudioResource landAudio;
 
 
     void Start()
@@ -37,6 +41,7 @@ public class Player : MonoBehaviour
         limpAction = InputSystem.actions.FindAction("GoLimp");
         startPos = transform.position;
         startRot = transform.rotation;
+        audio = gameObject.AddComponent<AudioSource>();
 
         Reset();
     }
@@ -54,22 +59,18 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Mathf.Sqrt(Mathf.Pow(aimValue.x, 2f) + Mathf.Pow(aimValue.y, 2f)) > aimThreshold)
-        {
-            aim = Vector2.SmoothDamp(aim, aimValue, ref aimVelocity, 0.025f);
-        }
-
         if (!limpAction.IsPressed())
         {
-            float aimX = aim.x;
-            float aimY = aim.y;
+            aim = Vector2.SmoothDamp(aim, aimValue, ref aimVelocity, 0.02f);
 
             // Both angles go from 0 (pointing right) to 2*pi (counterclockwise ofc)
-            float angleGoal = (Mathf.Atan2(aimY, aimX) + camera.transform.eulerAngles.z * Mathf.Deg2Rad + 2 * Mathf.PI) % (2 * Mathf.PI);
+            float angleGoal = (Mathf.Atan2(aim.y, aim.x) + camera.transform.eulerAngles.z * Mathf.Deg2Rad + 2 * Mathf.PI) % (2 * Mathf.PI);
             float angleCurrent = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+            float aimPower = math.tanh(Mathf.Sqrt(Mathf.Pow(aimValue.x, 2f) + Mathf.Pow(aimValue.y, 2f)) * sensitivity);
 
             float error = angleGoal - angleCurrent;
             error -= 2 * Mathf.PI * Mathf.Floor((error + Mathf.PI) / (2 * Mathf.PI));
+            error *= aimPower;
             float distance = Mathf.Abs(error);
 
             float direction = Mathf.Sign(error);
@@ -102,6 +103,8 @@ public class Player : MonoBehaviour
 
     public void Grab(Vector2 position)
     {
+        audio.resource = jumpAudio;
+        audio.Play();
         grab = true;
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         transform.position = position;
@@ -110,6 +113,8 @@ public class Player : MonoBehaviour
 
     void UnGrab()
     {
+        audio.resource = landAudio;
+        audio.Play();
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         rb.constraints = 0;
         grab = false;

@@ -1,0 +1,192 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-8808077987535034155
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump3_{-8808077987535034155}
+  m_AudioClip: {fileID: 8300000, guid: 7a8ec14172e853b4d88b008d254fd57b, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-6853950156134937995
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump5_{-6853950156134937995}
+  m_AudioClip: {fileID: 8300000, guid: c9b6d175393b545469f11b71537e69b6, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-6422688047046604959
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump13_{-6422688047046604959}
+  m_AudioClip: {fileID: 8300000, guid: 5a4edd2a063224d4bb6632b57232f505, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-1234577870866363662
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump2_{-1234577870866363662}
+  m_AudioClip: {fileID: 8300000, guid: 033163925b5c9c147add28f3b18c5c8d, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-22851632761570174
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump12_{-22851632761570174}
+  m_AudioClip: {fileID: 8300000, guid: 7cc29bb5e0b006e42bc815ec670222d1, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &1251744291705226078
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump6_{1251744291705226078}
+  m_AudioClip: {fileID: 8300000, guid: 775cca426bafd3c4c9dd39807db44cd2, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &2626753324293457474
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump1_{2626753324293457474}
+  m_AudioClip: {fileID: 8300000, guid: 564caed6256b53e4fb47c642057f3cc4, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &2823750515062968096
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump8_{2823750515062968096}
+  m_AudioClip: {fileID: 8300000, guid: ca35b69843ecad544b7b52176d8d5e22, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &3297176969130242835
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump14_{3297176969130242835}
+  m_AudioClip: {fileID: 8300000, guid: 793380645e2e9824a8f8aa42e27bd13e, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &3729916404849611060
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump4_{3729916404849611060}
+  m_AudioClip: {fileID: 8300000, guid: 08b3b867f0c38c14c98c28a5ac79207f, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &4024059772455056975
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump15_{4024059772455056975}
+  m_AudioClip: {fileID: 8300000, guid: 9a49551d288eb6d4894d98a82fe2e366, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &4695203905138059096
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump9_{4695203905138059096}
+  m_AudioClip: {fileID: 8300000, guid: 90bb94f2ef4b6ef43bb152b8aabf421e, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: JumpARC
+  m_Volume: 0
+  m_Pitch: 0
+  m_AutomaticTriggerTime: 0
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: -1, y: 0}
+  m_PitchRandomizationRange: {x: 0, y: 0}
+  m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: 2626753324293457474}
+  - {fileID: -1234577870866363662}
+  - {fileID: -8808077987535034155}
+  - {fileID: 3729916404849611060}
+  - {fileID: -6853950156134937995}
+  - {fileID: 1251744291705226078}
+  - {fileID: 6476686723329735154}
+  - {fileID: 2823750515062968096}
+  - {fileID: 4695203905138059096}
+  - {fileID: 8250349829856315425}
+  - {fileID: 7228169816286910271}
+  - {fileID: -22851632761570174}
+  - {fileID: -6422688047046604959}
+  - {fileID: 3297176969130242835}
+  - {fileID: 4024059772455056975}
+  m_AvoidRepeatingLast: 2
+  m_PlaybackMode: 2
+  m_TriggerMode: 0
+  m_AutomaticTriggerMode: 1
+  m_LoopMode: 1
+  m_VolumeRandomizationEnabled: 1
+  m_PitchRandomizationEnabled: 0
+  m_AutomaticTriggerTimeRandomizationEnabled: 0
+  m_LoopCountRandomizationEnabled: 0
+--- !u!1233149941 &6476686723329735154
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump7_{6476686723329735154}
+  m_AudioClip: {fileID: 8300000, guid: 44663dcf8dd6eab4f8750f193ef0ca19, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &7228169816286910271
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump11_{7228169816286910271}
+  m_AudioClip: {fileID: 8300000, guid: 46c5ef407b3f17c42ad00fb3a74e16a4, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &8250349829856315425
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Jump10_{8250349829856315425}
+  m_AudioClip: {fileID: 8300000, guid: c5646ab3c9368244c9fcfcb6efad2db1, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
