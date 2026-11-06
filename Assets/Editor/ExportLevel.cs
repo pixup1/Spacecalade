@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Globalization;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class ExportLevel
 {
     [MenuItem("Tools/Export level as OBJ")]
     public static void Export()
     {
-        string path = Application.dataPath + "/ExportedLevels/Level1.obj";
+        string path = Application.dataPath + "/ExportedLevels/" + SceneManager.GetActiveScene().name + ".obj";
 
         List<Collider2D> grabbables = new();
         foreach (Grabbable col in Object.FindObjectsByType<Grabbable>())

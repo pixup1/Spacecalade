@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private InputAction leapAction;
     private InputAction limpAction;
     private float leapForce = 500f;
-    private readonly float sensitivity = 0.06f;
+    private float sensitivity;
     private Vector2 aimValue;
     private Vector2 aim;
     private Vector2 aimVelocity;
@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     private AudioSource audio;
     public AudioResource jumpAudio;
     public AudioResource landAudio;
+    private Rigidbody2D? grabbedRb;
+    private Vector2 grabbedPoint;
 
 
     void Start()
@@ -42,8 +44,21 @@ public class Player : MonoBehaviour
         startPos = transform.position;
         startRot = transform.rotation;
         audio = gameObject.AddComponent<AudioSource>();
+        UpdateSensitivity();
 
         Reset();
+    }
+
+    public void UpdateSensitivity()
+    {
+        if (PlayerPrefs.HasKey("Sensitivity"))
+        {
+            sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+        }
+        else
+        {
+            sensitivity = 0.06f;
+        }
     }
 
     void Update()
@@ -52,8 +67,7 @@ public class Player : MonoBehaviour
 
         if (leapAction.WasPressedThisFrame() && grab)
         {
-            UnGrab();
-            rb.AddRelativeForceX(leapForce);
+            Leap();
         }
     }
 
@@ -101,28 +115,50 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Grab(Vector2 position)
-    {
-        audio.resource = jumpAudio;
-        audio.Play();
-        grab = true;
-        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-        transform.position = position;
-        gameObject.layer = LayerMask.NameToLayer("NoCollision");
-    }
-
-    void UnGrab()
+    public void Grab(Vector2 point, Vector2 normal, Rigidbody2D rb2)
     {
         audio.resource = landAudio;
         audio.Play();
-        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        rb.constraints = 0;
+        grab = true;
+        //rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        transform.position = point + normal * 0.5f;
+        HingeJoint2D? joint = gameObject.AddComponent(typeof(HingeJoint2D)) as HingeJoint2D;
+        joint.connectedBody = rb2;
+        joint.enableCollision = false;
+        grabbedRb = rb2;
+        grabbedPoint = rb2.transform.InverseTransformVector(point);
+        //gameObject.layer = LayerMask.NameToLayer("NoCollision");
+    }
+
+    void Leap()
+    {
+        audio.resource = jumpAudio;
+        audio.Play();
+        //gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        //rb.constraints = 0;
+        if (TryGetComponent<HingeJoint2D>(out var hinge))
+        {
+            Destroy(hinge);
+        }
         grab = false;
+        if (grabbedRb == null || grabbedRb.bodyType == RigidbodyType2D.Kinematic) {
+            rb.AddRelativeForceX(leapForce);
+        } else
+        {
+            rb.AddRelativeForceX(leapForce / 2);
+            grabbedRb.AddForceAtPosition(-transform.right * leapForce / 2, grabbedRb.transform.TransformVector(grabbedPoint));
+        }
     }
 
     public void Reset()
     {
         canGrab = true;
+        arms.Reset();
+        grabbedRb = null;
+        if (TryGetComponent<HingeJoint2D>(out var hinge))
+        {
+            Destroy(hinge);
+        }
         if (start != null)
         {
             grab = start.grab;
@@ -138,11 +174,12 @@ public class Player : MonoBehaviour
                 rb.linearVelocity = new(0, 0);
             }
             rb.angularVelocity = start.angularVelocity;
-        } else
+        }
+        else
         {
             grab = true;
             transform.SetPositionAndRotation(startPos, startRot);
-            rb.linearVelocity = new(0,0);
+            rb.linearVelocity = new(0, 0);
             rb.angularVelocity = 0;
         }
     }

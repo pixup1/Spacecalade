@@ -150,5 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9738992e9fbf1264f9a6957df7406142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camera
-  player: {fileID: 0}
+  player: {fileID: 1928982453285462707, guid: 6586355ebf01b664e9dca55a1a6954ad, type: 3}
   following: 1
+  skyboxMaterial: {fileID: -876546973899608171, guid: 872716494623d30479124818822a04f4, type: 3}
