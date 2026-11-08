@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private InputAction exitAction;
     public GameObject exitMenuPrefab;
     private GameObject? exitMenu;
+    public GameObject bravoScreenPrefab;
+    private GameObject? bravoScreen;
     public AudioSource drums;
 
     void Awake()
@@ -52,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (exitAction.WasPressedThisFrame())
+        if (exitAction.WasPressedThisFrame() && SceneManager.GetActiveScene().name.Contains("Level") && bravoScreen == null)
         {
             if (exitMenu == null)
             {
@@ -66,19 +68,23 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
+
     public void ReturnToMainMenu()
     {
         if (exitMenu != null)
         {
             Destroy(exitMenu);
         }
+        if (bravoScreen != null)
+        {
+            Destroy(bravoScreen);
+        }
         UnHideCursor();
         skyboxMaterial.SetVector("_ScrollSpeed", new Vector2(0.1f, 0));
         SceneManager.LoadScene("Menu");
         MuteDrums();
     }
-    
+
     public void CloseExitMenu()
     {
         Destroy(exitMenu);
@@ -112,13 +118,18 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
             SceneManager.LoadScene("Level" + level);
         }
+        else
+        {
+            bravoScreen = Instantiate(bravoScreenPrefab);
+            UnHideCursor();
+        }
     }
 
     private void UnmuteDrums()
     {
         drums.mute = false;
     }
-    
+
     private void MuteDrums()
     {
         drums.mute = true;
@@ -137,9 +148,13 @@ public class GameManager : MonoBehaviour
         {
             g.Reset();
         }
-        foreach (DynamicSlippy g in FindObjectsByType<DynamicSlippy>())
+        foreach (DynamicSlippy s in FindObjectsByType<DynamicSlippy>())
         {
-            g.Reset();
+            s.Reset();
+        }
+        foreach (Missile m in FindObjectsByType<Missile>())
+        {
+            m.Reset();
         }
     }
 

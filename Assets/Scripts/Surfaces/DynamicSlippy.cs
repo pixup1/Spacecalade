@@ -4,11 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class DynamicSlippy : MonoBehaviour
 {
-    Rigidbody2D rb;
-    Vector2 startPos;
-    Quaternion startRot;
-    Vector2 startPosVel;
-    float startRotVel;
+    private Rigidbody2D rb;
+    private Vector2 startPos;
+    private Quaternion startRot;
+    private Vector2 startPosVel;
+    private float startRotVel;
 
     void Start()
     {

@@ -14,10 +14,20 @@ public class Missile : MonoBehaviour
     private readonly float maxSpeed = 5.0f;
     public bool activated = false;
     public float activationDistance = 5.0f;
+    private Vector2 startPos;
+    private Quaternion startRot;
+    private Vector2 startPosVel;
+    private float startRotVel;
+    private bool startActivated;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        startPos = transform.position;
+        startRot = transform.rotation;
+        startPosVel = rb.linearVelocity;
+        startRotVel = rb.angularVelocity;
+        startActivated = activated;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = FindAnyObjectByType<Player>();
@@ -43,7 +53,7 @@ public class Missile : MonoBehaviour
             float goalAngle = Mathf.Atan2(goalDirection.y, goalDirection.x) * Mathf.Rad2Deg - 90;
             transform.rotation = Quaternion.AngleAxis(Mathf.SmoothDampAngle(transform.eulerAngles.z, goalAngle, ref angleVelocity, 0.25f), Vector3.forward);
         }
-        
+
         float speedForward = Vector2.Dot(rb.linearVelocity, transform.up);
         if (speedForward < maxSpeed && activated)
         {
@@ -57,22 +67,29 @@ public class Missile : MonoBehaviour
         }
     }
 
-    // void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     angleVelocity += 1000;
-    //     ContactPoint2D contact = collision.GetContact(0);
-    //     float angle = Vector2.SignedAngle(transform.up, -contact.normal);
-    //     if (Mathf.Abs(angle) < 90)
-    //     {
-    //         angleVelocity += Mathf.Sign(angle) * 500;
-    //     }
-    // }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.TryGetComponent<Player>(out var player))
         {
             FindAnyObjectByType<GameManager>().ResetLevel();
         }
+        else
+        {
+            angleVelocity += 1000;
+            ContactPoint2D contact = collision.GetContact(0);
+            float angle = Vector2.SignedAngle(transform.up, -contact.normal);
+            if (Mathf.Abs(angle) < 90)
+            {
+                angleVelocity += Mathf.Sign(angle) * 500;
+            }
+        }
+    }
+
+    public void Reset()
+    {
+        transform.SetPositionAndRotation(startPos, startRot);
+        rb.linearVelocity = startPosVel;
+        rb.angularVelocity = startRotVel;
+        activated = startActivated;
     }
 }

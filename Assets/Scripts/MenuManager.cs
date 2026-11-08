@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class MenuManager : MonoBehaviour
     public Slider sensitivitySlider;
     public Text sensitivityText;
     public Player player;
+    private InputAction exitAction;
 
     void Start()
     {
@@ -19,7 +21,16 @@ public class MenuManager : MonoBehaviour
 
     void Awake()
     {
+        exitAction = InputSystem.actions.FindAction("Exit");
         ReturnToMainMenu();
+    }
+    
+    void Update()
+    {
+        if (exitAction.WasPressedThisFrame())
+        {
+            ReturnToMainMenu();
+        }
     }
 
     public void LaunchGame()

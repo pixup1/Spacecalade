@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   skyboxMaterial: {fileID: -876546973899608171, guid: 872716494623d30479124818822a04f4, type: 3}
   exitMenuPrefab: {fileID: 457123112374105660, guid: 9ed6d35b38f3ac80398c760f1b25dd7c, type: 3}
+  bravoScreenPrefab: {fileID: 457123112374105660, guid: 7c1920fdb4bbcd760972ba28f066865d, type: 3}
   drums: {fileID: 8815638650425962446}
 --- !u!82 &3865124801073565278
 AudioSource:
