@@ -9,13 +9,13 @@ using UnityEngine.Audio;
 public class Player : MonoBehaviour
 {
     public PlayerArms arms;
-    private Camera camera;
+    private UnityEngine.Camera camera;
     private StartPosition? start;
     private Rigidbody2D rb;
     private InputAction aimAction;
     private InputAction leapAction;
     private InputAction limpAction;
-    private float leapForce = 500f;
+    private readonly float leapForce = 500f;
     private float sensitivity;
     private Vector2 aimValue;
     private Vector2 aim;
@@ -30,12 +30,14 @@ public class Player : MonoBehaviour
     public AudioResource landAudio;
     private Rigidbody2D? grabbedRb;
     private Vector2 grabbedPoint;
+    // How much the grabbed rigidbody is allowed to rotate when we jump off it, from 0 to 1
+    private readonly float rotationToGrabbed = 0.1f;
 
 
     void Start()
     {
         arms = FindAnyObjectByType<PlayerArms>();
-        camera = FindAnyObjectByType<Camera>();
+        camera = FindAnyObjectByType<UnityEngine.Camera>();
         start = FindAnyObjectByType<StartPosition>();
         rb = GetComponent<Rigidbody2D>();
         aimAction = InputSystem.actions.FindAction("Aim");
@@ -141,19 +143,21 @@ public class Player : MonoBehaviour
             Destroy(hinge);
         }
         grab = false;
-        if (grabbedRb == null || grabbedRb.bodyType == RigidbodyType2D.Kinematic) {
+        if (grabbedRb == null || grabbedRb.bodyType == RigidbodyType2D.Kinematic)
+        {
             rb.AddRelativeForceX(leapForce);
-        } else
+        }
+        else
         {
             rb.AddRelativeForceX(leapForce / 2);
-            grabbedRb.AddForceAtPosition(-transform.right * leapForce / 2, grabbedRb.transform.TransformVector(grabbedPoint));
+            grabbedRb.AddForceAtPosition(leapForce * rotationToGrabbed * -transform.right / 2, grabbedRb.transform.TransformVector(grabbedPoint));
+            grabbedRb.AddForce((1 - rotationToGrabbed) * leapForce * -transform.right / 2);
         }
     }
 
     public void Reset()
     {
         canGrab = true;
-        arms.Reset();
         grabbedRb = null;
         if (TryGetComponent<HingeJoint2D>(out var hinge))
         {
@@ -175,7 +179,7 @@ public class Player : MonoBehaviour
             }
             rb.angularVelocity = start.angularVelocity;
         }
-        else
+        else // This should only happen if the spawn is disabled in the editor, in game the player should always have a spawn
         {
             grab = true;
             transform.SetPositionAndRotation(startPos, startRot);

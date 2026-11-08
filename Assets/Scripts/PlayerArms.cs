@@ -38,7 +38,7 @@ public class PlayerArms : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (/*!limpAction.IsPressed() &&*/ !player.grab && player.canGrab && collider.GetComponent<Grabbable>() != null)
+        if (/*!limpAction.IsPressed() &&*/ !player.grab && player.canGrab && (collider.GetComponent<Grabbable>() != null || collider.GetComponent<DynamicGrabbable>() != null))
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 1.0f);
             if (hit && hit.collider == collider)

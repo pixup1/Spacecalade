@@ -27,7 +27,7 @@ public class Void : MonoBehaviour
         camera.following = false;
         yield return new WaitForSeconds(1.5f);
         //TODO: make player not disappear while camera is still panning
-        player.Reset();
+        FindAnyObjectByType<GameManager>().ResetLevel();
         camera.following = true;
     }
 }

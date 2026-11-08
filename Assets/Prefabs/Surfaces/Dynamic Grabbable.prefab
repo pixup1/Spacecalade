@@ -70,10 +70,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8177242976754693547, guid: aba15a6244ce2cb48b8da7082b7f4521, type: 3}
       propertyPath: m_Name
-      value: Dynamic Grabbable Variant
+      value: Dynamic Grabbable
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3461981538003813426, guid: aba15a6244ce2cb48b8da7082b7f4521, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8177242976754693547, guid: aba15a6244ce2cb48b8da7082b7f4521, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7292381392026508755}
   m_SourcePrefab: {fileID: 100100000, guid: aba15a6244ce2cb48b8da7082b7f4521, type: 3}
+--- !u!1 &7443696973466306058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8177242976754693547, guid: aba15a6244ce2cb48b8da7082b7f4521, type: 3}
+  m_PrefabInstance: {fileID: 1600525940488237985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7292381392026508755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443696973466306058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfc0e5f87f95a94b93ab49eaac69217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicGrabbable

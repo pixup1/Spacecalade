@@ -16,7 +16,7 @@ public class Deadly : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Player>(out var player))
         {
-            player.Reset();
+            FindAnyObjectByType<GameManager>().ResetLevel();
         }
     }
 }
