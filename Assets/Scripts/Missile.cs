@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
 public class Missile : MonoBehaviour
 {
     private Rigidbody2D rb;
@@ -11,6 +12,8 @@ public class Missile : MonoBehaviour
     private float angleVelocity;
     private readonly float acceleration = 10.0f;
     private readonly float maxSpeed = 5.0f;
+    public bool activated = false;
+    public float activationDistance = 5.0f;
 
     void Start()
     {
@@ -22,18 +25,27 @@ public class Missile : MonoBehaviour
 
     void Update()
     {
-        Vector2 playerDirection = Vector2.Normalize(player.transform.position - transform.position) * 1f;
-        Vector2 missileDirection = Vector2.Normalize(rb.linearVelocity);
-        Vector2 goalDirection = playerDirection - missileDirection;
-        if (goalDirection.magnitude < 0.3f)
+        Vector2 toPlayer = player.transform.position - transform.position;
+        if (!activated && toPlayer.magnitude <= activationDistance)
         {
-            goalDirection = playerDirection;
+            GetComponent<AudioSource>().Play();
+            activated = true;
         }
-        float goalAngle = Mathf.Atan2(goalDirection.y, goalDirection.x) * Mathf.Rad2Deg - 90;
-        transform.rotation = Quaternion.AngleAxis(Mathf.SmoothDampAngle(transform.eulerAngles.z, goalAngle, ref angleVelocity, 0.25f), Vector3.forward);
-
+        if (activated)
+        {
+            Vector2 playerDirection = Vector2.Normalize(toPlayer);
+            Vector2 missileDirection = Vector2.Normalize(rb.linearVelocity);
+            Vector2 goalDirection = playerDirection - missileDirection;
+            if (goalDirection.magnitude < 0.3f)
+            {
+                goalDirection = playerDirection;
+            }
+            float goalAngle = Mathf.Atan2(goalDirection.y, goalDirection.x) * Mathf.Rad2Deg - 90;
+            transform.rotation = Quaternion.AngleAxis(Mathf.SmoothDampAngle(transform.eulerAngles.z, goalAngle, ref angleVelocity, 0.25f), Vector3.forward);
+        }
+        
         float speedForward = Vector2.Dot(rb.linearVelocity, transform.up);
-        if (speedForward < maxSpeed)
+        if (speedForward < maxSpeed && activated)
         {
             animator.enabled = true;
             rb.AddRelativeForceY(acceleration);

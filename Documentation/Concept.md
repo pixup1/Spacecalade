@@ -43,15 +43,30 @@ Teaches leaping, grabbing, dying in the void, dying to a deadly wall, and bounci
 
 ### Level 2
 
-Introduces missiles
+Introduces dynamic objects
 
 **Specific mechanics:**
-- Missiles
+- Dynamic grabbable surfaces
+- Dynamic little ice cubes
 
 **Parts of the level:**
-- Shrinking tunnel
-- Missile chase
++ Shrinking tunnel
++ Open hole by moving square
++ Jump across dynamic grabbables in the void
++ Use dynamic grabbable as a "double jump" to get past a deadly corridor
++ Bounce onto a dynamic grabbable and jump off it quickly
+
+### Level 3
+
+Missile chase
+
+**Specific mechanics:**
+- Missiles that kill you on impact
+
+**Parts of the level**
++ Little tutorial about spinning to bounce a different direction
++ Regular platforming until a missile pops out
 
 ### Level ideas
 
-A level where the station is only on one side of the screen, and you can easily get bounced into outer space (like Gravity (2013)) (wait how is that even possible actually)
+A level where the station is only on one side of the screen, and you can easily get bounced into outer space (like Gravity (2013)) (wait how is that even possible actually if you need to jump across gaps)
