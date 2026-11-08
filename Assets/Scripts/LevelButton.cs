@@ -13,6 +13,7 @@ public class LevelButton : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         Button button = GetComponent<Button>();
         Text text = GetComponentInChildren<Text>();
+        button.onClick.AddListener(StartLevel);
         text.text = level.ToString();
         (int, int) levelRange = gameManager.GetLevelRange();
         if (level < levelRange.Item1 || level > levelRange.Item2 || level > gameManager.GetCurrentLevel())

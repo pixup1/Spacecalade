@@ -1,6 +1,6 @@
 # Spacecalade
 
-In Spacecalade, you must escape a destroyed space station after a mysterious catastrophe took place while you were sleeping. Marooned in the middle of the Milky Way, 3.2 lightyears from the closest star, your only chance of survival is the last remaining escape pod, at the other end of the wreck. One wrong jump and you may end up drifting away from the station until your oxygen runs out. Will you make it out?
+In Spacecalade, you must escape a space station after a mysterious catastrophe took place while you were sleeping. Marooned in the middle of the Milky Way, 3.2 lightyears from the closest star, your only chance of survival is the last remaining escape pod, at the other end of the wreck. One wrong jump and you may end up drifting away until your oxygen runs out. Will you make it out?
 
 ## Game design considerations
 
